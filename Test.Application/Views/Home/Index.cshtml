@@ -1,8 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Test.Application.Models.FileModel>
+
+@{
+    ViewData["Title"] = "Upload Files";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h3>Load photos</h3>
+
+<form asp-action="AddFile" asp-controller="Home" method="post" enctype="multipart/form-data">
+    <input type="file" name="uploadedFile"/>
+    <input type="submit" value="Load file" />
+</form>
+<hr />
+
+<h3>All loaded files</h3>
+
+<table style="width:100%; border-collapse:collapse">
+    <thead>
+        <tr>
+            <th style="text-align:left; padding:10px;">Photo</th>
+            <th style="text-align:left; padding:10px;">File name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reverse())
+        {
+            <tr>
+                <td style="padding:10px;">
+                    <img src="@Url.Content(item.Path)" style="width:100%; height:auto" />
+                </td>
+                <td style="padding:10px;">
+                    @item.Name
+                </td>
+            </tr>
+        
+        }
+    </tbody>
+</table>
+
+@* 
+@foreach (var item in Model)
+{
+    <p>
+        <img src="@Url.Content(item.Path)" style="width:100%; height:auto" />
+    </p>
+} *@
+
